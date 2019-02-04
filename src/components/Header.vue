@@ -1,5 +1,51 @@
 <template>
   <header>
+      <div class="cart" v-show="isCardOpen">
+          <i @click="closeCardModal" class="fas fa-times"></i>
+          <div class="container">
+              <div class="cart-col cart-col-left">
+                    <h3>Product</h3>
+                    <img src="https://i.ibb.co/qmRKv5D/longboard.jpgg" alt="">
+                    <div class="wrapp-cart-item">
+                        <h3>Fashion Stuff</h3>
+                        <div>
+                            <a href="#">Edit</a><a href="#">Remove</a>
+                        </div>   
+                    </div>             
+              </div>
+              <div class="cart-col cart-col-right">
+                  <div class="qty-price-product">
+                      <h3>Quantity</h3>
+                      <h3>1</h3>
+                  </div>
+                  <div class="qty-price-product">
+                      <h3>Price</h3>
+                      <h3>300$</h3>
+                  </div>
+              </div>
+              
+                  <div class="cart-col cart-col-left">
+                      <p class="vaucher">have a vaucher code?</p>
+                      <input type="text" placeholder="fill in your code">
+                  </div>
+              
+              <div class="cart-col cart-col-right">
+                  <ul>
+                      <li>Subtotal<span>$ 150</span></li>
+                      <li>Indication delivery cost<span>$ 0</span></li>
+                      <li><h3>Order total</h3><span><h3>$ 150</h3></span></li>
+                  </ul>
+              </div>
+              <div class="cart-col cart-col-left">
+                  <p>Order shipped within 1 business day</p>
+                  <p>30-day return guarantee</p>
+              </div>
+              <div class="payment cart-col cart-col-right">
+                  We accept: <img src="../assets/images/pay-method.jpg" alt="">
+                  <a href="#">Secure Checkout <i class="fas fa-angle-right"></i></a>
+              </div>
+          </div>
+    </div>
       <div class="header-top">
         <ul class="header-top-left">
         
@@ -21,7 +67,7 @@
         <h1 class="logo">every.day.counts</h1>
         <ul class="header-top-right">
           <li class="hidden-xs"><a href="wishlist"><i class="fas fa-heart"></i><span>0</span></a></li>
-          <li><a href="cart"><i class="fas fa-shopping-bag"></i><span>2</span></a></li>
+          <li><a href="#cart" @click="showCardModal()"><i class="fas fa-shopping-bag"></i><span>2</span></a></li>
         </ul>
       </div>
 
@@ -47,6 +93,19 @@
 <script>
 export default {
   name: 'Header',
+  data: function() {
+    	return {
+            isCardOpen: false,
+        }
+    },
+  methods: {
+    showCardModal: function() {
+      this.isCardOpen = true;
+    },
+    closeCardModal: function() {
+      this.isCardOpen = false;
+    },
+  }
   
 }
 </script>
@@ -54,7 +113,7 @@ export default {
 <style scoped lang="scss">
 
 header {
-    height: 110px;
+   // height: 110px;
     padding: 25px 5%;
 }
 
@@ -202,6 +261,109 @@ header {
   top: 18px;
   width: 0%;
   left: 50%;
+}
+
+.cart {
+    padding-top: 20px;
+    .fa-times {
+        position: absolute;
+        right: 15px;
+        top: 10px;
+    }
+    .container {
+        margin: 0 auto;
+        display: grid;
+        grid-template-rows: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+        grid-row-gap: 20px;
+        .cart-col-left {
+            text-align: left;
+        }
+        .cart-col-right {
+            text-align: right;
+            .qty-price-product {
+                display: inline-block;
+                text-align: center;
+                width: 100px;
+                font-size: .9rem;
+            }
+            ul {
+                margin-top: 20px;
+                li {
+                    font-size: 0.9rem;
+                    padding-bottom: 10px;
+                span {
+                    width: 250px;
+                    display: inline-block;
+                   
+                }
+                h3 {
+                    display: inline-block;
+                    font-size: 1.1rem;
+                }
+            }
+            } 
+        }
+        .img {
+            display: inline-block;
+            height: 75px;
+        }
+        .wrapp-cart-item {
+            vertical-align: top;
+            padding-top: 10px;
+            padding-left: 15px;
+            display: inline-block;
+            h3 {
+                padding-bottom: 10px;
+            }
+            a {
+                font-size: .8rem;
+                margin-right: 30px;
+                color: #a8a8a8;
+            }
+        }
+        .cart-col {
+            h3 {
+                font-size: .9rem;
+                padding-bottom: 15px;
+            }
+            img {
+                max-height: 75px;
+            }
+            &:nth-child(3), &:nth-child(4) {
+                border-top: 1px solid #dddad6;
+                border-bottom: 1px solid #dddad6;
+            }
+            input {
+                border-top: none;
+                border-left: none;
+                border-right: none;
+                border-bottom: 1px solid #dddad6;
+            }
+            p {
+                font-size: .8rem;
+                margin-bottom: 10px;
+            }
+            .vaucher {
+                margin-top: 20px;
+            }
+        }
+        .payment {
+            font-size: .8rem;
+            margin-top: 20px;
+            img {
+                vertical-align: middle;
+                margin: 0 20px;
+            }
+            a {
+                background: #002d47;
+                color: #fff;
+                padding: 20px 35px;
+                text-transform: uppercase;
+                text-decoration: none;
+            }
+        }
+    }
 }
 
 

@@ -2,13 +2,19 @@
     <div  id="open-modal" class="modal-window"  @click="$emit('close')">
         <div @click.stop>
             <!-- <a href="#" @click="$emit('close')" title="Close" class="modal-close">Close</a> -->
-            <h1>Add To Cart</h1>
+            <h1>Add To Cart</h1> 
             <img :src="product.image_url" alt="">
-            <h3>Fashion Stuf - 150$</h3>
-            <h3>Quantity</h3>
-            <input type="text">
-            <h2>Total Price: 300$</h2>
-            <h3><a href="#">Add To Cart</a></h3>
+            <div class="wrapp-info">
+                <h3 class="basic-info">{{ product.name }} - {{ product.price }}$</h3>
+           
+            <div class="inline-el">
+                <h3 class="qty-product">Quantity: </h3>
+                <input type="text" v-model="productQuantity">
+            </div>
+            <h2 class="total-price">Total Price: 300$</h2>
+            <a @click="addToCart" class="add-to-cart" href="#">Add To Cart</a>
+            </div>
+            
         </div>
     </div>
 </template>
@@ -27,7 +33,13 @@ export default {
     },
     data () {
         return {
-            // showModal: false,
+            productQuantity: '',
+        }
+    },
+    computed() {
+        CalculateTotalProduct: {
+            let total = 0;
+
         }
     },
     methods: {
@@ -38,6 +50,9 @@ export default {
         closeProductModal() {
             this.$emit('closeQuickViewModal');
         },
+        addToCart() {
+            console.log(this.productQuantity)
+        }
     }
 }
 
@@ -60,17 +75,14 @@ export default {
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   transition: all 0.3s;
-//   &:target {
-//     opacity: 1;
-//     pointer-events: auto;
-//   }
+
   &>div {
-    width: 400px;
+    width: 290px;
     position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 2em;
+    padding: 20px 0;;
     background: #ffffff;
     color: #333333;
     z-index: 99999;
@@ -79,9 +91,49 @@ export default {
     font-weight: bold;
   }
   h1 {
-    font-size: 150%;
+    font-size: 1.5rem;
     margin: 0 0 15px;
     color: #333333;
+  }
+  img {
+      height: 205px;
+      width: 205px;
+      object-fit: conver;
+  }
+  .wrapp-info {
+        width: 205px;
+        margin: 0 auto;
+        
+  }
+  .basic-info {
+      text-align: left;
+      font-size: 1rem;
+      line-height: 3;
+  }
+  .inline-el {
+        text-align: left;
+        padding-bottom: 30px;
+  }
+  .qty-product {
+      display: inline-block;
+      font-size: 1rem;
+      text-align: left;
+  }
+  input {
+      width: 60px;
+      margin-left: 15px;
+      border: 1px solid #000;
+      padding: 3px 0;
+  }
+  .total-price {
+      font-size: 1.1rem;
+      text-align: right;
+  }
+  .add-to-cart {
+        text-align: right;
+        display: block;
+        margin-top: 70px;
+        color: #000;
   }
 }
 .modal-window.open {

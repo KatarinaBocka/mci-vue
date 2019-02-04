@@ -55,11 +55,8 @@ export default {
         ]
     }
   },
-  computed: {
-      href() {
-          return 'foobar';
-        //   return this.name;
-      }
+  mounted() {
+      this.$store.dispatch('loadProducts');
   },
    methods: {
       OpenModal(index) {

@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import axios from 'axios';
 
-Vue.use(Vuex);
+Vue.use(Vuex, axios);
 
 export const store = new Vuex.Store({
     state: {
@@ -27,5 +28,18 @@ export const store = new Vuex.Store({
                 image_url: "https://i.ibb.co/9v8zW0z/mens-tie.jpg",
             }
         ]
-    }
+    },
+    actions: {
+        loadProducts({commit}) {
+            axios.get('http://api.clothes-shop.devbox21.com/')
+                .then(res => {
+                    console.log(res)
+                    let products = res
+                })
+                .catch(error => { console.log(error) })
+        }
+    },
+    // mutations: {
+    //     SET_PRODUCTS (state, products)
+    // }
 });
