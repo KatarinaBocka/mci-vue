@@ -55,7 +55,7 @@
 
              <!-- Mobile Menu Start -->
             <div class="mobile-menu hidden-lg hidden-md hidden-sm nav-link">
-                <div id="nav-icon3" v-bind:class="{ open: openMobileMenu }" @click="openMobileMenu = !openMobileMenu">
+                <div id="nav-icon3">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -67,7 +67,7 @@
         <h1 class="logo">every.day.counts</h1>
         <ul class="header-top-right">
           <li class="hidden-xs"><a href="wishlist"><i class="fas fa-heart"></i><span>0</span></a></li>
-          <li><a href="#cart" @click="showCardModal()"><i class="fas fa-shopping-bag"></i><span>2</span></a></li>
+          <li><a href="#cart" @click="showCardModal()"><i class="fas fa-shopping-bag"></i><span>{{this.$store.state.total}}</span></a></li>
         </ul>
       </div>
 
@@ -91,29 +91,42 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
-  name: 'Header',
-  data: function() {
+    name: 'Header',
+    data: function() {
     	return {
             isCardOpen: false,
         }
     },
-  methods: {
-    showCardModal: function() {
-      this.isCardOpen = true;
+    computed: {
+        // itemsInCart() {
+        //     for (var i = 0; i < this.$store.state.cart.length; i++) {
+        //     let total = 0;
+        //     console.log("test"+this.total)
+        //         this.total += this.$store.state.cart[i].quantity;
+        //     }
+        //    return this.total;
+        // },
+    //      ...mapState([
+    //        'total'
+    //    ]),
     },
-    closeCardModal: function() {
-      this.isCardOpen = false;
-    },
-  }
-  
+     methods: {
+        showCardModal: function() {
+            this.isCardOpen = true;
+        },
+        closeCardModal: function() {
+            this.isCardOpen = false;
+        },
+    } 
 }
 </script>
 
 <style scoped lang="scss">
 
 header {
-   // height: 110px;
     padding: 25px 5%;
 }
 

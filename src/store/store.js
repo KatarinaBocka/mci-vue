@@ -1,45 +1,44 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
+import * as types from './mutation-types'
 
 Vue.use(Vuex, axios);
 
 export const store = new Vuex.Store({
     state: {
-        products: [
-            {
-                name: "Men's suede shoes",
-                price: 300,
-                image_url: "https://i.ibb.co/hyVRdQ7/suede-shoe.jpg",
-            },
-            {
-                name: "Fashion stuff",
-                price: 150,
-                image_url: "https://i.ibb.co/9r9m0zZ/accessories.jpg",
-            },
-            {
-                name: "Longboard look",
-                price: 850,
-                image_url: "https://i.ibb.co/qmRKv5D/longboard.jpg",
-            },
-            {
-                name: "Classic neck tie",
-                price: 350,
-                image_url: "https://i.ibb.co/9v8zW0z/mens-tie.jpg",
-            }
-        ]
+        products: [],
+        cart: [],
+        total: 0
     },
-    actions: {
-        loadProducts({commit}) {
-            axios.get('http://api.clothes-shop.devbox21.com/')
-                .then(res => {
-                    console.log(res)
-                    let products = res
-                })
-                .catch(error => { console.log(error) })
+    mutations: {
+        SET_PRODUCTS (state, products) {
+            state.products = products
+        },
+        ADD_TO_CART: (state, product) => {
+
+            state.total += product.quantity
+            state.cart.push({
+                name: product.name,
+                image: product.img_url,
+                price: product.price,
+                quantity: product.quantity
+            })
         }
     },
-    // mutations: {
-    //     SET_PRODUCTS (state, products)
-    // }
+    actions: {
+        loadProducts({ commit }) {
+            axios.get('http://api.clothes-shop.devbox21.com/')
+                .then(res => {
+                    let products = res.data
+                    commit('SET_PRODUCTS', products)
+                })
+                .catch(error => { console.log(error) })
+        },
+        addToCart (context, product) {
+            context.commit('addToCart', product)
+        }
+    },
+    
+
 });

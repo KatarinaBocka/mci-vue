@@ -1,7 +1,6 @@
 <template>
     <div  id="open-modal" class="modal-window"  @click="$emit('close')">
         <div @click.stop>
-            <!-- <a href="#" @click="$emit('close')" title="Close" class="modal-close">Close</a> -->
             <h1>Add To Cart</h1> 
             <img :src="product.image_url" alt="">
             <div class="wrapp-info">
@@ -9,23 +8,20 @@
            
             <div class="inline-el">
                 <h3 class="qty-product">Quantity: </h3>
-                <input type="text" v-model="productQuantity">
+                <input type="text" v-model="quantity">
             </div>
             <h2 class="total-price">Total Price: 300$</h2>
-            <a @click="addToCart" class="add-to-cart" href="#">Add To Cart</a>
+            <a @click.prevent="addToCart(product)" class="add-to-cart" href="#">Add To Cart</a>
             </div>
-            
         </div>
     </div>
 </template>
 
 <script>
+import { mapActions, mapState, mapMutations } from 'vuex';
 
 export default {
     name: 'Modal',
-    components: {
-      
-    },
     props: {
         product: {
             type: Object
@@ -33,27 +29,24 @@ export default {
     },
     data () {
         return {
-            productQuantity: '',
-        }
-    },
-    computed() {
-        CalculateTotalProduct: {
-            let total = 0;
-
+            quantity: 0
         }
     },
     methods: {
-      OpenModal(product) {
-        console.log("modal")
-        this.showModal = !this.showModal;
-      },
+        OpenModal(product) {
+            this.showModal = !this.showModal;
+        },
         closeProductModal() {
             this.$emit('closeQuickViewModal');
         },
-        addToCart() {
-            console.log(this.productQuantity)
+        ...mapMutations([
+            'ADD_TO_CART'
+        ]),
+        addToCart: function (product) {
+            this.product.quantity = parseInt(this.quantity)
+            this.ADD_TO_CART(this.product)
         }
-    }
+    },
 }
 
 </script>

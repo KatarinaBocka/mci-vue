@@ -2,13 +2,13 @@
     <section class="products">
          <h1>Recommended for you</h1>
         <div class="container">
-            <div class="shop-box shop-box-1" v-for="(product, index) in this.$store.state.products" :key="`${index}`">
+            <div class="shop-box shop-box-1" v-for="(product, index) in products" :key="`${index}`">
                 <img :src="product.image_url" :alt="product.name">
                 <h3>{{ product.name }} - {{ product.price }}$</h3>
                 <a :href="'/product/' + index" @click.prevent="OpenModal(index)">Add to cart</a>
 
                 <!-- Add Modal Component -->
-                <Modal v-if="showModal" @click="$emit('close')" @close="showModal = false" :class="{ open: showModal}" class="modal-window"  :product="products[ind]" />
+                <Modal v-if="showModal" @click="$emit('close', 'addToCart')" @close="showModal = false" :class="{ open: showModal}" class="modal-window"  :product="products[ind]"  />
 
             </div>
         </div>
@@ -17,7 +17,8 @@
 
 <script>
 
-import Modal from "./Modal"
+import Modal from "./Modal";
+import { mapState } from 'vuex';
 
 export default {
   name: 'Main',
@@ -28,42 +29,25 @@ export default {
     return {
         showModal: false,
         ind: 1,
-        product: {
-            showModal: false
-        },
-        products: [
-            {
-                name: "Men's suede shoes",
-                price: 300,
-                image_url: "https://i.ibb.co/hyVRdQ7/suede-shoe.jpg",
-            },
-            {
-                name: "Fashion stuff",
-                price: 150,
-                image_url: "https://i.ibb.co/9r9m0zZ/accessories.jpg",
-            },
-            {
-                name: "Longboard look",
-                price: 850,
-                image_url: "https://i.ibb.co/qmRKv5D/longboard.jpg",
-            },
-            {
-                name: "Classic neck tie",
-                price: 350,
-                image_url: "https://i.ibb.co/9v8zW0z/mens-tie.jpg",
-            }
-        ]
     }
   },
   mounted() {
       this.$store.dispatch('loadProducts');
   },
+  computed: {
+      ...mapState([
+          'products',
+          'cart'
+      ]),
+  },
    methods: {
       OpenModal(index) {
-        // this.showModal = !this.showModal;
         this.ind = index;
 		this.showModal = true;
       },
+      addToCart(product) {
+            this.cart.push(product)
+        }
     }
 }
 
