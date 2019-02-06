@@ -9,7 +9,8 @@ export const store = new Vuex.Store({
     state: {
         products: [],
         cart: [],
-        total: 0
+        total: 0, // Total price for one type of product
+        //totalCost: 0
     },
     mutations: {
         SET_PRODUCTS (state, products) {
@@ -22,7 +23,9 @@ export const store = new Vuex.Store({
                 name: product.name,
                 image: product.img_url,
                 price: product.price,
-                quantity: product.quantity
+                quantity: product.quantity,
+                total: product.totalPrice,
+                editing: false
             })
         }
     },

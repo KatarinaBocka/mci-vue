@@ -30,23 +30,28 @@ export default {
     data () {
         return {
             quantity: 0,
-            totalPrice: 0
+            totalPrice: 0, // For one type of product
+            editing: false
         }
     },
     methods: {
         OpenModal(product) {
             this.showModal = !this.showModal;
         },
-        // closeProductModal() {
-        //     this.$emit('closeQuickViewModal');
-        // },
         ...mapMutations([
             'ADD_TO_CART'
         ]),
         addToCart: function (product) {
-            this.product.quantity = parseInt(this.quantity)
+            this.product.quantity = parseInt(this.quantity);
+            this.product.totalPrice = this.totalPrice;
+
+
             this.ADD_TO_CART(this.product)
+
+            console.log(this.$store.state.cart)
+            
         },
+        // Calculate price for one type of product
         calculatePrice(product) {
             this.totalPrice = this.quantity * this.product.price
         },

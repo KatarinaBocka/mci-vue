@@ -11,7 +11,9 @@
                 <Modal v-if="showModal" @click="$emit('close', 'addToCart')" @close="showModal = false" :class="{ open: showModal}" class="modal-window"  :product="products[ind]"  />
 
             </div>
+             <div v-for="(item, index) in cart" :key="`${index + 1}`">{{item.name}}</div>
         </div>
+       
     </section>    
 </template>
 
@@ -58,9 +60,6 @@ export default {
 
 /* ---------- PRODUCT SECTION ---------- */
 .products {
-    h2 {
-
-    }
     .container {
         margin: 0 auto;
         display: grid;
