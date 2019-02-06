@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-import * as types from './mutation-types'
+//import * as types from './mutation-types'
 
 Vue.use(Vuex, axios);
 

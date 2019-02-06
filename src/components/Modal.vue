@@ -8,10 +8,10 @@
            
             <div class="inline-el">
                 <h3 class="qty-product">Quantity: </h3>
-                <input type="text" v-model="quantity">
+                <input type="text" v-on:keyup.enter="calculatePrice(product), addToCart(product), $emit('close')" @blur="calculatePrice(product)" v-model="quantity">
             </div>
-            <h2 class="total-price">Total Price: 300$</h2>
-            <a @click.prevent="addToCart(product)" class="add-to-cart" href="#">Add To Cart</a>
+            <h2 class="total-price">Total Price: {{ totalPrice }}$</h2>
+            <a @click.prevent="addToCart(product), $emit('close')" class="add-to-cart" href="#">Add To Cart</a>
             </div>
         </div>
     </div>
@@ -29,23 +29,27 @@ export default {
     },
     data () {
         return {
-            quantity: 0
+            quantity: 0,
+            totalPrice: 0
         }
     },
     methods: {
         OpenModal(product) {
             this.showModal = !this.showModal;
         },
-        closeProductModal() {
-            this.$emit('closeQuickViewModal');
-        },
+        // closeProductModal() {
+        //     this.$emit('closeQuickViewModal');
+        // },
         ...mapMutations([
             'ADD_TO_CART'
         ]),
         addToCart: function (product) {
             this.product.quantity = parseInt(this.quantity)
             this.ADD_TO_CART(this.product)
-        }
+        },
+        calculatePrice(product) {
+            this.totalPrice = this.quantity * this.product.price
+        },
     },
 }
 
