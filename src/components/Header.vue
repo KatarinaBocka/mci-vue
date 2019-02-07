@@ -2,7 +2,7 @@
   <header>
     <div class="cart" v-show="isCardOpen">
       <i @click="closeCardModal" class="fas fa-times"></i>
-      <div class="container" v-for="(cartItem, index) in cart" :key="`${index + 2}`">
+      <div class="container product-container" v-for="(cartItem, index) in cart" :key="`${index + 2}`">
         <div class="cart-col cart-col-left">
           <h3>Product</h3>
           <img src="https://i.ibb.co/qmRKv5D/longboard.jpgg" alt>
@@ -19,7 +19,7 @@
             <h3>Quantity</h3>
 
             <h3 v-if="!cartItem.editing" @dblclick="editItem(cartItem)">{{cartItem.quantity}}</h3>
-            <input v-else type="text" v-model="cartItem.quantity" @blur="doneEditItem(cartItem)" @keyup.enter="doneEditItem(cartItem)" @keyup.esc="cancelEditItem(cartItem)" v-focus>
+            <input v-else class="editQuantity" type="text" v-model="cartItem.quantity" @blur="doneEditItem(cartItem)" @keyup.enter="doneEditItem(cartItem)" @keyup.esc="cancelEditItem(cartItem)" v-focus>
 
            <!-- <h3>{{cartItem.quantity}}</h3> -->
           </div>
@@ -65,7 +65,9 @@
           </a>
         </div>
       </div>
+      <div class="arrow"></div>
     </div>
+
 
     <div class="header-top">
       <ul class="header-top-left">
@@ -80,13 +82,30 @@
         </li>
 
         <!-- Mobile Menu Start -->
-        <div class="mobile-menu hidden-lg hidden-md hidden-sm nav-link">
+
+        
+
+
+        <div class="mobile-menu hidden-lg hidden-md hidden-sm nav-link" v-bind:class="{ open: openMobileMenu }" @click="openMobileMenu = !openMobileMenu">
           <div id="nav-icon3">
             <span></span>
             <span></span>
             <span></span>
             <span></span>
           </div>
+
+          <div id="mySidenav" class="sidenav">
+              <a href="#" class="closebtn" onclick="closeNav()">&times;</a>
+              <div @click.stop class="mob-navigation">
+                <i class="fas fa-search"></i>
+                <input class="mob-search" type="text">
+                <a href="#">About</a>
+                <a href="#">Services</a>
+                <a href="#">Clients</a>
+                <a href="#">Contact</a>
+              </div>
+          </div>
+
         </div>
         <!-- Mobile Menu End -->
       </ul>
@@ -146,8 +165,9 @@ export default {
   name: "Header",
   data: function() {
     return {
+      openMobileMenu: false,
       isCardOpen: false,
-      beforeEditCache: ''
+      beforeEditCache: '',
     };
   },
   directives: {
@@ -297,6 +317,87 @@ header {
 }
 
 /* ---------- Mobile Menu ---------- */
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  transition: 0.5s;
+  .mob-navigation {
+    width: 80%;
+    height: 100%;
+    border-right: 1px solid #dddad6;
+    text-align: left;
+    i {
+        position: absolute;
+        top: 7px;
+        left: 20px;
+        color: #002d47;
+    }
+
+  }
+  .mob-search {
+    width: 85%;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    border-bottom: 1px solid #dddad6;
+    background: #fcfbf9;
+    padding: 8px 0 8px 15%;
+    &:focus {
+      outline: none;
+    }
+  }
+  a {
+    border-bottom: 1px solid #dddad6;
+    font-size: .9rem;
+    padding: 8px 8px 8px 20px;
+    text-decoration: none;
+    color: #002d47;
+    display: block;
+    transition: 0.3s;
+  }
+  
+}
+
+
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+  border-bottom: none;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.open {
+  .sidenav {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  background-color: #fcfbf9;
+  overflow-x: hidden;
+  transition: 0.5s;
+  
+}
+}
+
+
+
+
 #nav-icon3 {
   width: 20px;
   height: 17px;
@@ -343,34 +444,46 @@ header {
   top: 12px;
 }
 
-#nav-icon3.open span:nth-child(1) {
+.open {
+  #nav-icon3 span:nth-child(1) {
   top: 6px;
   width: 0%;
   left: 50%;
 }
 
-#nav-icon3.open span:nth-child(2) {
+#nav-icon3 span:nth-child(2) {
   -webkit-transform: rotate(45deg);
   -moz-transform: rotate(45deg);
   -o-transform: rotate(45deg);
   transform: rotate(45deg);
 }
 
-#nav-icon3.open span:nth-child(3) {
+#nav-icon3 span:nth-child(3) {
   -webkit-transform: rotate(-45deg);
   -moz-transform: rotate(-45deg);
   -o-transform: rotate(-45deg);
   transform: rotate(-45deg);
 }
 
-#nav-icon3.open span:nth-child(4) {
+#nav-icon3 span:nth-child(4) {
   top: 18px;
   width: 0%;
   left: 50%;
 }
+}
+
+
+
+
 
 .cart {
-  padding-top: 20px;
+  position: relative;
+  padding: 20px 0;
+  border-bottom: 1px solid #dddad6;
+  .product-container {
+    border-bottom: 1px solid #dddad6;
+    padding: 20px 0;
+  }
   .fa-times {
     position: absolute;
     right: 15px;
@@ -392,6 +505,16 @@ header {
         text-align: center;
         width: 100px;
         font-size: 0.9rem;
+        .editQuantity {
+          width: 40px;
+          padding-left: 32px;
+          &:focus {
+             border-top: none;
+             border-left: none;
+             border-right: none;
+             border-bottom:1px solid #dddad6;
+          }
+        }
       }
       ul {
         margin-top: 20px;
@@ -445,6 +568,7 @@ header {
         border-left: none;
         border-right: none;
         border-bottom: 1px solid #dddad6;
+        outline: none;
       }
       p {
         font-size: 0.8rem;
@@ -468,6 +592,30 @@ header {
         text-transform: uppercase;
         text-decoration: none;
       }
+    }
+  }
+  .arrow {
+    position: absolute;
+    z-index: 900;
+    bottom: 0;
+    right: 70px;
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+    &:before {
+        border: 8px solid transparent;
+        border-bottom-color: #dddad6;
+        position: absolute;
+        bottom: 100%;
+        right: 40px;
+        content: '';
+    }
+    &:after {
+        border: 6px solid transparent;
+        border-bottom-color: #fff;
+        position: absolute;
+        bottom: 100%;
+        right: 42px;
+        content: '';
     }
   }
 }

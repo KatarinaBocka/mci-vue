@@ -90,20 +90,34 @@ main {
     grid-template-rows: 500px;
     grid-template-columns: repeat(2, 1fr);
     .shop-women {
-        background: url('../assets/images/women-shop.jpeg');
-        background-size: cover;
-        background-position: center;
+        background: url('../assets/images/women-shop1.jpg');
     }
     .shop-men {
-        background: url('https://images.pexels.com/photos/936023/pexels-photo-936023.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+        background: url('../assets/images/shop-men1.jpg');
+    }
+    .shop-link {
+        position: relative;
         background-size: cover;
         background-position: center;
+        a {
+            position:absolute; 
+            top:50%; 
+            left:50%; 
+            transform:translate(-50%, -50%); 
+            width:50%;
+            font-size: 3.125em;
+            color: #fff;
+            text-decoration: none;
+        }
     }
+    
 }
 
 .delivery-sec {
     h1 {
-
+        padding-top: 30px;
+        padding-bottom: 30px;
+        font-size: 1.6rem;
     }
     .container {
         margin: 0 auto;
@@ -147,28 +161,6 @@ main {
     }
 }
 
-/* ---------- RECOMMENDED SECTION ---------- */
-// .recom-sec {
-//     h2 {
-
-//     }
-//     .container {
-//         margin: 0 auto;
-//         display: grid;
-//         grid-template-rows: 205px;
-//         grid-template-columns: repeat(4, 1fr);
-//         grid-row-gap: 25px;
-//         grid-column-gap: 60px;
-//         grid-row-gap: 60px;
-//         .shop-box {
-//             img {
-//                 max-width: 100%;
-//                 max-height: 100%;
-//             }
-//         }
-//     }
-// }
-
 /* ---------- MEDIA QUERY ---------- */
 @media (min-width: 1200px) {
 
@@ -184,10 +176,9 @@ main {
         grid-template-rows: repeat(2, 250px);
         grid-template-columns: repeat(2, 1fr);
     }
-    // .recom-sec .container {
-    //     grid-template-rows: repeat(2, 205px);
-    //     grid-template-columns: repeat(2, 1fr);
-    // }
+    .shop-links .container .shop-link a {
+        font-size: 1.2rem;
+    }
     
 }
 @media (max-width: 468px) {
@@ -198,12 +189,9 @@ main {
         grid-template-rows: repeat(4, 250px);
         grid-template-columns: 100%;
     }
-    // .recom-sec .container {
-    //     grid-template-rows: repeat(4, 205px);
-    //     grid-template-columns: 205px;
-    //     width: 205px;
-    // }
-     
+    .shop-links .container .shop-link a {
+        font-size: .9rem;
+    }
 }
 
 

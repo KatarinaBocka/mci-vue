@@ -60,6 +60,11 @@ export default {
 
 /* ---------- PRODUCT SECTION ---------- */
 .products {
+    h1 {
+        margin-top: 60px;
+        margin-bottom: 40px;
+        font-size: 1.6rem;
+    }
     .container {
         margin: 0 auto;
         display: grid;
@@ -72,6 +77,14 @@ export default {
             img {
                 max-width: 100%;
                 max-height: 100%;
+            }
+            h3 {
+                font-size: 1.1rem;
+                font-weight: normal;
+            }
+            a {
+                font-size: 1rem;
+                color: #002d47;
             }
         }
     }

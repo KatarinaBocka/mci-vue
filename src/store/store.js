@@ -19,14 +19,23 @@ export const store = new Vuex.Store({
         ADD_TO_CART: (state, product) => {
 
             state.total += product.quantity
-            state.cart.push({
-                name: product.name,
-                image: product.img_url,
-                price: product.price,
-                quantity: product.quantity,
-                total: product.totalPrice,
-                editing: false
-            })
+
+            const record = state.cart.find(p => p.name === product.name)
+
+            if(!record) {
+                state.cart.push({
+                    name: product.name,
+                    image: product.img_url,
+                    price: product.price,
+                    quantity: product.quantity,
+                    total: product.totalPrice,
+                    editing: false
+                })
+            } else {
+                record.quantity = record.quantity + product.quantity;
+            }
+
+            
         }
     },
     actions: {
