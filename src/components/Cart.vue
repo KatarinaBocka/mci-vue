@@ -287,6 +287,9 @@ export default {
 /* ---------- MEDIA QUERY ---------- */
 
 @media (max-width: 991px) and (min-width: 768px) {
+    .cart .container-bottom {
+        grid-template-columns: repeat(1, 1fr);
+    }
     .cart .container .payment a {
         padding: 15px 25px;
     }
