@@ -1,73 +1,7 @@
 <template>
   <header>
-    <div class="cart" v-show="isCardOpen">
-      <i @click="closeCardModal" class="fas fa-times"></i>
-      <div class="container product-container" v-for="(cartItem, index) in cart" :key="`${index + 2}`">
-        <div class="cart-col cart-col-left">
-          <h3>Product</h3>
-          <img src="https://i.ibb.co/qmRKv5D/longboard.jpgg" alt>
-          <div class="wrapp-cart-item">
-            <h3>{{cartItem.name}}</h3>
-            <div>
-              <a href="#" @click="editItem(cartItem)">Edit</a>
-              <a href="#" @click="removeItem(index)">Remove</a>
-            </div>
-          </div>
-        </div>
-        <div class="cart-col cart-col-right">
-          <div class="qty-price-product">
-            <h3>Quantity</h3>
 
-            <h3 v-if="!cartItem.editing" @dblclick="editItem(cartItem)">{{cartItem.quantity}}</h3>
-            <input v-else class="editQuantity" type="text" v-model="cartItem.quantity" @blur="doneEditItem(cartItem)" @keyup.enter="doneEditItem(cartItem)" @keyup.esc="cancelEditItem(cartItem)" v-focus>
-
-           <!-- <h3>{{cartItem.quantity}}</h3> -->
-          </div>
-          <div class="qty-price-product">
-            <h3>Price</h3>
-            <h3>{{cartItem.price * cartItem.quantity}} $</h3>
-          </div>
-        </div>
-      </div>
-      <div class="container">
-        <div class="cart-col cart-col-left">
-          <p class="vaucher">have a vaucher code?</p>
-          <input type="text" placeholder="fill in your code">
-        </div>
-
-        <div class="cart-col cart-col-right">
-          <ul>
-            <li>Subtotal
-              <span>$ {{ totalCost }}</span>
-            </li>
-            <li>Indication delivery cost
-              <span>$ 20</span>
-            </li>
-            <li>
-              <h3>Order total</h3>
-              <span>
-                <h3>$ {{ totalCostDelivery }}</h3>
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="container">
-        <div class="cart-col cart-col-left">
-          <p>Order shipped within 1 business day</p>
-          <p>30-day return guarantee</p>
-        </div>
-        <div class="payment cart-col cart-col-right">
-          We accept:
-          <img src="../assets/images/pay-method.jpg" alt>
-          <a href="#">Secure Checkout
-            <i class="fas fa-angle-right"></i>
-          </a>
-        </div>
-      </div>
-      <div class="arrow"></div>
-    </div>
-
+    <Cart :isCardOpen.sync="isCardOpen" @resetIsCartOpen="isCardOpen = $event" />
 
     <div class="header-top">
       <ul class="header-top-left">
@@ -75,17 +9,12 @@
           <img src="../assets/images/Flag_Netherlands.jpg" alt="flag">
           <a href="nl">NL</a>
         </li>
-        <!-- <li><a href="en">EN</a></li> -->
         <li class="account hidden-xs">
           <a href="login">login</a>/
           <a href="singup">sign up</a>
         </li>
 
         <!-- Mobile Menu Start -->
-
-        
-
-
         <div class="mobile-menu hidden-lg hidden-md hidden-sm nav-link" v-bind:class="{ open: openMobileMenu }" @click="openMobileMenu = !openMobileMenu">
           <div id="nav-icon3">
             <span></span>
@@ -97,17 +26,53 @@
           <div id="mySidenav" class="sidenav">
               <a href="#" class="closebtn" onclick="closeNav()">&times;</a>
               <div @click.stop class="mob-navigation">
-                <i class="fas fa-search"></i>
+                <i class="fas fa-search mob-search-icon"></i>
                 <input class="mob-search" type="text">
-                <a href="#">About</a>
-                <a href="#">Services</a>
-                <a href="#">Clients</a>
-                <a href="#">Contact</a>
+                <a href="#">home</a>
+                <a href="#"  @click="isDropdownOpenWomen = !isDropdownOpenWomen">women 
+                  <i v-if="!isDropdownOpenWomen" class="fas fa-angle-down"></i>
+                  <i v-else class="fas fa-angle-up"></i></a>
+                  <ul class="mob-dropdown" v-show="isDropdownOpenWomen">
+                    <li><a href="#">all clothing</a></li>
+                    <li><a href="#">accessories</a></li>
+                    <li><a href="#">basic</a></li>
+                    <li><a href="#">dresses</a></li>
+                    <li><a href="#">jackets</a></li>
+                    <li><a href="#">jeans</a></li>
+                    <li><a href="#">pants</a></li>
+                    <li><a href="#">shirts</a></li>
+                    <li><a href="#">skirts</a></li>
+                    <li><a href="#">sweaters</a></li>
+                  </ul>
+                <a href="#" @click="isDropdownOpenMen = !isDropdownOpenMen">men 
+                  <i v-if="!isDropdownOpenMen" class="fas fa-angle-down"></i>
+                  <i v-else class="fas fa-angle-up"></i></a>
+                  <ul class="mob-dropdown" v-show="isDropdownOpenMen">
+                    <li><a href="#">all clothing</a></li>
+                    <li><a href="#">accessories</a></li>
+                    <li><a href="#">basic</a></li>
+                    <li><a href="#">dresses</a></li>
+                    <li><a href="#">jackets</a></li>
+                    <li><a href="#">jeans</a></li>
+                    <li><a href="#">pants</a></li>
+                    <li><a href="#">shirts</a></li>
+                    <li><a href="#">skirts</a></li>
+                    <li><a href="#">sweaters</a></li>
+                  </ul>
+                <a href="#">experience</a>
+                <a href="#"><i class="fas fa-user-alt"></i>login / sign up</a>
+                <a href="#"><img src="../assets/images/Flag_Netherlands.jpg" alt="flag">Nederland</a>
+                <a href="#"><i class="fas fa-heart"></i> wishlist</a>
+                <a href="#">help</a>
+                <a href="#">about us</a>
+                <a href="#">privacy policy</a>
+                <a href="#">terms & conditions</a>
               </div>
           </div>
 
         </div>
         <!-- Mobile Menu End -->
+
       </ul>
       <h1 class="logo">every.day.counts</h1>
       <ul class="header-top-right">
@@ -134,8 +99,52 @@
               <i class="fas fa-home"></i>
             </a>
           </li>
-          <li>
+          <li @mouseover="isMegamenuOpenWomen = true" @mouseleave="isMegamenuOpenWomen = false">
             <a href="women">Women</a>
+            <div class="megamenu" v-if="isMegamenuOpenWomen">
+              <ul class="again">
+                <div class="arrow"></div>
+                <li class="single-menu col-20">
+                  <span>featured</span>
+                  <a href="#" cass="category">new arrivals</a>
+                  <a href="#" cass="category">best selers</a>
+                  <a href="#" cass="category">sale</a>
+                </li>
+
+                <li class="single-menu col-20">
+                  <span>categories</span>
+                  <a href="#" cass="category">all clothing</a>
+                  <a href="#" cass="category">accessories</a>
+                  <a href="#" cass="category">basics</a>
+                  <a href="#" cass="category">dresses</a>
+                  <a href="#" cass="category">jackets</a>
+                  <a href="#" cass="category">jeans</a>
+                </li>
+
+                <li class="single-menu col-20">
+                  <span>categories</span>
+                  <a href="#" cass="category">jeans</a>
+                  <a href="#" cass="category">pants</a>
+                  <a href="#" cass="category">shirts</a>
+                  <a href="#" cass="category">skirts</a>
+                  <a href="#" cass="category">sweaters</a>
+                  <a href="#" cass="category">tops</a>
+                </li>
+
+                <li class="single-menu col-20">
+                  <span>lookbooks</span>
+                  <a href="#" cass="category">summer 2014</a>
+                  <a href="#" cass="category">spring 2014</a>
+                </li>
+
+                <li class="single-menu col-40 sale">
+                  <a href="#" cass="category sale">
+                    <h2>Sale</h2>
+                    <h4>20% discount</h4>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </li>
           <li>
             <a href="men">Men</a>
@@ -159,15 +168,23 @@
 </template>
 
 <script>
+import Cart from './Cart';
 import { mapActions, mapState, mapMutations } from "vuex";
 
 export default {
   name: "Header",
+  components: {
+    Cart
+  },
   data: function() {
     return {
       openMobileMenu: false,
       isCardOpen: false,
       beforeEditCache: '',
+      isMegamenuOpenWomen: false,
+      isDropdownOpenWomen: false,
+      isDropdownOpenMen: false,
+
     };
   },
   directives: {
@@ -187,7 +204,7 @@ export default {
     },
     // Total cost for all product in cart + delivery
     totalCostDelivery() {
-      let delivery = 20; // For Now...
+      let delivery = 20; // For test...
 
       return (
         this.cart.reduce((accum, product) => {
@@ -201,25 +218,8 @@ export default {
     showCardModal: function() {
       this.isCardOpen = true;
     },
-    closeCardModal: function() {
-      this.isCardOpen = false;
-    },
-    removeItem(index) {
-      this.cart.splice(index, 1)
-    },
-    editItem(cartItem) {
-        this.beforeEditCache = cartItem.quantity;
-        cartItem.editing = true;
-    },
-    doneEditItem(cartItem) {
-        if(cartItem.quantity.trim().length == 0 || cartItem.quantity < 0) {
-          cartItem.quantity = this.beforeEditCache
-        }
-        cartItem.editing = false;
-    },
-    cancelEditItem(cartItem) {
-        cartItem.editing = false;
-        cartItem.quantity = this.beforeEditCache;
+    dropdownOpen() {
+      this.isDropdownOpen = !this.isDropdownOpen;
     }
   }
 };
@@ -283,6 +283,7 @@ header {
     justify-content: unset;
     li {
       padding: 0 20px;
+      position: relative;
       a {
         color: #052d46;
         text-decoration: none;
@@ -305,6 +306,9 @@ header {
     .search-input {
       border: none;
       text-align: right;
+      &:focus {
+        outline: none;
+      }
     }
     .search-btn {
       position: absolute;
@@ -312,6 +316,9 @@ header {
       top: 3px;
       border: none;
       background: none;
+      &:focus {
+        outline: none;
+      }
     }
   }
 }
@@ -326,19 +333,21 @@ header {
   top: 0;
   left: 0;
   overflow-x: hidden;
-  transition: 0.5s;
+  transition: 0.2s;
   .mob-navigation {
     width: 80%;
     height: 100%;
     border-right: 1px solid #dddad6;
     text-align: left;
-    i {
+    .mob-search-icon {
         position: absolute;
         top: 7px;
         left: 20px;
         color: #002d47;
     }
-
+    .fa-user-alt { margin-right: 15px; }
+    a img { margin-right: 9px; }
+    .fa-heart { margin-right: 12px; }
   }
   .mob-search {
     width: 85%;
@@ -360,12 +369,19 @@ header {
     color: #002d47;
     display: block;
     transition: 0.3s;
+    position: relative;
+    .fa-angle-up, 
+    .fa-angle-down {
+      position: absolute;
+      right: 10px;
+    }
+  }
+  .mob-dropdown {
+    display: block;
+    background: #fff;
   }
   
 }
-
-
-
 .sidenav .closebtn {
   position: absolute;
   top: 0;
@@ -390,13 +406,9 @@ header {
   left: 0;
   background-color: #fcfbf9;
   overflow-x: hidden;
-  transition: 0.5s;
-  
+  transition: 0.2s; 
 }
 }
-
-
-
 
 #nav-icon3 {
   width: 20px;
@@ -444,181 +456,97 @@ header {
   top: 12px;
 }
 
-.open {
-  #nav-icon3 span:nth-child(1) {
-  top: 6px;
-  width: 0%;
-  left: 50%;
-}
-
-#nav-icon3 span:nth-child(2) {
-  -webkit-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-
-#nav-icon3 span:nth-child(3) {
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-}
-
-#nav-icon3 span:nth-child(4) {
-  top: 18px;
-  width: 0%;
-  left: 50%;
-}
-}
-
-
-
-
-
-.cart {
-  position: relative;
-  padding: 20px 0;
-  border-bottom: 1px solid #dddad6;
-  .product-container {
-    border-bottom: 1px solid #dddad6;
-    padding: 20px 0;
-  }
-  .fa-times {
-    position: absolute;
-    right: 15px;
-    top: 10px;
-  }
-  .container {
-    margin: 0 auto;
-    display: grid;
-    grid-template-rows: repeat(1, 1fr);
-    grid-template-columns: repeat(2, 1fr);
-    grid-row-gap: 20px;
-    .cart-col-left {
+/* ---------- MEGA MENU --------- */
+.megamenu {
+  .again {
+      opacity: 1; // treba 0
+      margin-top: 25px;
+      -webkit-transition: all 0.5s ease 0s;
+      transition: all 0.5s ease 0s;
+      visibility: visible; // treba hidden
+      background: #fff none repeat scroll 0 0;
+      padding: 20px;
+      top: 100%;
+      left: -430px;
+      width: 1100px;
       text-align: left;
-    }
-    .cart-col-right {
-      text-align: right;
-      .qty-price-product {
+      border-top: 1px solid #dddad6;
+      position: absolute;
+      z-index: 10;
+      .arrow {
+        position: absolute;
+        z-index: 900;
+        top: 0;
+        right: 54%;
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+        &:before {
+          border: 11px solid transparent;
+          border-bottom-color: #dddad6;
+          position: absolute;
+          bottom: 100%;
+          right: 40px;
+          content: '';
+        }
+        &:after {
+          border: 9px solid transparent;
+          border-bottom-color: #fff;
+          position: absolute;
+          bottom: 100%;
+          right: 42px;
+          content: '';
+        }
+      }
+      .single-menu {
         display: inline-block;
-        text-align: center;
-        width: 100px;
-        font-size: 0.9rem;
-        .editQuantity {
-          width: 40px;
-          padding-left: 32px;
-          &:focus {
-             border-top: none;
-             border-left: none;
-             border-right: none;
-             border-bottom:1px solid #dddad6;
+        a {
+          display: block;
+          line-height: 25px;
+          font-size: 14px;
+          &:hover {
+            opacity: 0.7;
+          }
+        }
+        span {
+          font-size: 1.1rem;
+          line-height: 50px;
+        }
+      }
+      .col-20 {
+        width: 20%;
+      }
+      .col-40 {
+        width: 40%;
+      }
+      .single-menu.sale {
+        background-image: url("../assets/images/shop-men1.jpg");
+        background-size: cover;
+        background-position-y: center;
+        height: 160px;
+        margin-top: 35px;
+        position: relative;
+        a {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+          color: #fff;
+          letter-spacing: 1px;
+          text-align: center;
+          h2 { 
+            font-size: 3rem;
+            padding-bottom: 10px;
+          }
+          h4 { 
+            font-size: 1rem;
           }
         }
       }
-      ul {
-        margin-top: 20px;
-        li {
-          font-size: 0.9rem;
-          padding-bottom: 10px;
-          span {
-            width: 250px;
-            display: inline-block;
-          }
-          h3 {
-            display: inline-block;
-            font-size: 1.1rem;
-          }
-        }
-      }
-    }
-    .img {
-      display: inline-block;
-      height: 75px;
-    }
-    .wrapp-cart-item {
-      vertical-align: top;
-      padding-top: 10px;
-      padding-left: 15px;
-      display: inline-block;
-      h3 {
-        padding-bottom: 10px;
-      }
-      a {
-        font-size: 0.8rem;
-        margin-right: 30px;
-        color: #a8a8a8;
-      }
-    }
-    .cart-col {
-      h3 {
-        font-size: 0.9rem;
-        padding-bottom: 15px;
-      }
-      img {
-        max-height: 75px;
-      }
-      &:nth-child(3),
-      &:nth-child(4) {
-        border-top: 1px solid #dddad6;
-        border-bottom: 1px solid #dddad6;
-      }
-      input {
-        border-top: none;
-        border-left: none;
-        border-right: none;
-        border-bottom: 1px solid #dddad6;
-        outline: none;
-      }
-      p {
-        font-size: 0.8rem;
-        margin-bottom: 10px;
-      }
-      .vaucher {
-        margin-top: 20px;
-      }
-    }
-    .payment {
-      font-size: 0.8rem;
-      margin-top: 20px;
-      img {
-        vertical-align: middle;
-        margin: 0 20px;
-      }
-      a {
-        background: #002d47;
-        color: #fff;
-        padding: 20px 35px;
-        text-transform: uppercase;
-        text-decoration: none;
-      }
-    }
-  }
-  .arrow {
-    position: absolute;
-    z-index: 900;
-    bottom: 0;
-    right: 70px;
-    -webkit-transform: rotate(180deg);
-    transform: rotate(180deg);
-    &:before {
-        border: 8px solid transparent;
-        border-bottom-color: #dddad6;
-        position: absolute;
-        bottom: 100%;
-        right: 40px;
-        content: '';
-    }
-    &:after {
-        border: 6px solid transparent;
-        border-bottom-color: #fff;
-        position: absolute;
-        bottom: 100%;
-        right: 42px;
-        content: '';
-    }
   }
 }
+
+
 
 /* ---------- MEDIA QUERY ---------- */
 @media (min-width: 1200px) {
@@ -630,10 +558,27 @@ header {
   .hidden-md {
     display: none !important;
   }
+  .megamenu .again {
+    width: 900px;
+    left: -340px;
+
+  }
 }
 @media (max-width: 991px) and (min-width: 768px) {
   .hidden-sm {
     display: none !important;
+  }
+  .megamenu .again {
+    width: 700px;
+    left: -250px;
+
+  }
+  .megamenu .again .single-menu.sale a h2 {
+    font-size: 2rem;
+    padding-bottom: 5px;
+  }
+  .megamenu .again .single-menu.sale a h4 {
+    font-size: .8rem;
   }
 }
 @media (max-width: 767px) {
@@ -674,10 +619,24 @@ header {
     width: 50%;
     .search-btn {
       right: inherit;
+      left: 8px;
     }
     .search-input {
       padding: 5px 20px;
+      width: 75%;
+      text-align: left;
     }
   }
+  .megamenu .again {
+    display: none;
+  }
+}
+@media (max-width: 400px) {
+  .header-bottom nav .search .search-input {
+    width: 85px;
+  }
+  .header-top .logo[data-v-61dd7a3d] {
+    font-size: 1.1rem;
+  } 
 }
 </style>

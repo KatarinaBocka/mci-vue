@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-//import * as types from './mutation-types'
 
 Vue.use(Vuex, axios);
 
@@ -10,7 +9,6 @@ export const store = new Vuex.Store({
         products: [],
         cart: [],
         total: 0, // Total price for one type of product
-        //totalCost: 0
     },
     mutations: {
         SET_PRODUCTS (state, products) {

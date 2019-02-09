@@ -126,6 +126,10 @@ export default {
       margin-left: 15px;
       border: 1px solid #000;
       padding: 3px 0;
+      text-align: center;
+      &:focus {
+          outline: #aaa;
+      }
   }
   .total-price {
       font-size: 1.1rem;

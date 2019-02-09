@@ -162,11 +162,11 @@ main {
 }
 
 /* ---------- MEDIA QUERY ---------- */
-@media (min-width: 1200px) {
 
-}
 @media (max-width: 1199px) and (min-width: 992px) {
- 
+    .shop-links .container .shop-link a {
+        font-size: 2.125rem;
+    }
 }
 @media (max-width: 991px) and (min-width: 468px) {
     .shop-links .container {
@@ -188,6 +188,9 @@ main {
     .delivery-sec .container {
         grid-template-rows: repeat(4, 250px);
         grid-template-columns: 100%;
+    }
+    .delivery-sec h1 {
+        font-size: 1.1rem;
     }
     .shop-links .container .shop-link a {
         font-size: .9rem;

@@ -57,7 +57,6 @@ export default {
 
 <style scoped lang="scss">
 
-
 /* ---------- PRODUCT SECTION ---------- */
 .products {
     h1 {
@@ -72,7 +71,7 @@ export default {
         grid-template-columns: repeat(4, 1fr);
         grid-row-gap: 25px;
         grid-column-gap: 60px;
-        grid-row-gap: 60px;
+        grid-row-gap: 70px;
         .shop-box {
             img {
                 max-width: 100%;
@@ -81,6 +80,7 @@ export default {
             h3 {
                 font-size: 1.1rem;
                 font-weight: normal;
+                padding-bottom: 10px;
             }
             a {
                 font-size: 1rem;
@@ -105,10 +105,7 @@ export default {
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   transition: all 0.3s;
-//   &:target {
-//     opacity: 1;
-//     pointer-events: auto;
-//   }
+
   &>div {
     width: 400px;
     position: absolute;
@@ -157,15 +154,24 @@ export default {
         grid-template-rows: repeat(2, 205px);
         grid-template-columns: repeat(2, 1fr);
     }
-    
+    .products .container .shop-box h3 {
+        font-size: 1rem;
+    } 
 }
+
 @media (max-width: 468px) {
     .products .container {
         grid-template-rows: repeat(4, 205px);
         grid-template-columns: 205px;
         width: 205px;
     }
-     
+    .products h1 {
+        margin-top: 0px;
+        margin-bottom: 20px;
+    }
+    .products .container .shop-box h3 {
+        font-size: 1rem;
+    }
 }
 
 
